@@ -1,4 +1,6 @@
 # T2
+Grupo D
+
 # Participantes
 - Nicolas Marcelino da Mota
 - Gabriel Rocha da Cunha
