@@ -50,23 +50,31 @@ Para adequar o grafo ao formato de entrada exigido pelo algoritmo (uma lista de 
 
 ## Complexidade
 
-## Tempo: O(V · (V + E))
+Seja V = 6 o número de vértices e E = 5 o número de arestas do grafo (a soma dos graus é 2E = 10, como se vê nas listas de adjacência).
 
-Cada execução do algoritmo de componentes custa O(V + E):
+### Tempo: O(V + E)
 
-- O laço principal faz V iterações, cada uma com custo constante quando o vértice já foi visitado.
-- `dfs` é chamada **exatamente uma vez por vértice**, porque um vértice só entra na recursão se `comp[w] = -1` e é marcado logo na entrada.
-- Dentro de cada chamada, a lista de adjacência do vértice é percorrida **uma única vez**. Somando todas as listas, o total de posições visitadas é a soma dos graus, que é 2E (cada aresta aparece nas listas dos dois extremos).
-- Total por execução: V + 2E = O(V + E). No caso particular: 6 + 10 = 16 operações elementares.
+- O laço principal percorre os V vértices, e cada iteração tem custo constante quando o vértice já foi visitado.
+- A DFS é chamada **exatamente uma vez por vértice**, pois um vértice só entra na recursão se ainda não foi visitado e é marcado logo na entrada.
+- Dentro de cada chamada, a lista de adjacência do vértice é percorrida **uma única vez**. Somando todas as listas, o total de posições visitadas é a soma dos graus, que é 2E, pois cada aresta aparece nas listas dos dois extremos.
+- Total: V + 2E = O(V + E). No grafo deste marco: 6 + 10 = 16 operações elementares.
 
-Para encontrar os lugares críticos, o algoritmo é executado uma vez no grafo original e V vezes com um vértice removido, ou seja, V + 1 execuções. Total: O(V · (V + E)). No caso particular, no máximo 7 × 16 = 112 operações elementares (na prática menos, pois o vértice removido e suas arestas são ignorados).
+Com matriz de adjacência, examinar os vizinhos de um vértice custaria O(V) mesmo para vértices de grau baixo, levando a O(V²). Como o grafo é esparso (E = 5, muito menor que V² = 36), a lista de adjacência é a escolha mais eficiente.
 
-Com matriz de adjacência, examinar os vizinhos de um vértice custaria O(V) mesmo para vértices de grau baixo, levando a O(V³) no total. Por isso usamos listas de adjacência.
+### Espaço: O(V + E)
 
-## Espaço: O(V + E)
+- Listas de adjacência: O(V + E), com V cabeças de lista e 2E entradas (aqui, 6 e 10).
+- Vetor de componentes (que também indica os vértices já visitados): O(V).
+- Pilha de recursão: O(V) no pior caso, quando o grafo é um caminho e a DFS desce por todos os vértices. Neste grafo, a profundidade máxima é 4 (por exemplo, 0 → 1 → 4 → 3 na indexação de 0 a n−1).
+- Total: O(V + E).
 
-- Listas de adjacência: O(V + E) (V cabeças de lista e 2E entradas; aqui, 6 e 10).
-- Vetor `comp[]`: O(V), reinicializado a cada remoção, sem alocar novo espaço.
-- Pilha de recursão: O(V) no pior caso, quando o grafo é um caminho e a DFS desce por todos os vértices. No caso particular o máximo foi 4 (caminho 1 → 2 → 3 → 4 no grafo original).
+### Custo das consultas de conectividade
+
+Depois do pré-processamento em O(V + E), que é a execução do algoritmo de componentes conexas, a pergunta "os vértices `u` e `v` estão ligados?" se resume a comparar o identificador de componente de `u` com o de `v`.
+
+- **Consulta em O(1)**, sem percorrer o grafo novamente. Como o grafo deste marco é conexo, todos os vértices recebem o mesmo identificador e qualquer par de vértices é considerado ligado.
+- A quantidade de componentes conexas também é obtida em O(1), pois basta ler o contador mantido pelo algoritmo (aqui, 1).
+- Sem o pré-processamento, cada consulta exigiria uma nova DFS, com custo O(V + E). Para Q consultas, o custo seria O(Q · (V + E)), contra O((V + E) + Q) com o vetor de componentes.
+- Ressalva: o vetor de componentes vale para o grafo **estático**. Se arestas fossem inseridas ou removidas, ele precisaria ser recalculado (ou substituído por outra estrutura, como union-find).
 - Total: O(V + E).
 
