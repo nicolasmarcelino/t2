@@ -11,16 +11,13 @@ O problema original descreve uma rede de lugares (numerados a partir de 1) ligad
 - Componentes esperadas: {1, 2, 3, 4} e {5, 6}
 - Resposta esperada: **1** lugar crítico (o lugar `2`). Removendo `2`, o vértice `1` fica isolado e o número de componentes passa de 2 para 3. Os vértices `3` e `4` formam um ciclo com `2`, então remover qualquer um deles não desconecta ninguém. Em {5, 6}, remover um extremo deixa o outro isolado, mas o número de componentes não aumenta.
 
-Entrada no formato do problema (cada bloco termina com uma linha `0`, e a entrada termina com `N = 0`):
+Entrada no formato do problema. A primeira linha é o número de lugares `N`. Cada linha seguinte tem um lugar e os lugares ligados a ele, e cada ligação aparece apenas uma vez. O bloco termina com uma linha `0`, e a entrada termina com `N = 0`:
 
 ```
 6
-1 2
 2 1 3 4
-3 2 4
-4 2 3
+3 4
 5 6
-6 5
 0
 0
 ```
@@ -31,7 +28,9 @@ Saída esperada:
 1
 ```
 
-Listas de adjacência usadas pelo algoritmo:
+Na leitura, cada par (lugar, vizinho) é inserido nas duas listas de adjacência, pois as linhas são bidirecionais. Assim, a linha `2 1 3 4` cria as arestas `2-1`, `2-3` e `2-4`.
+
+Listas de adjacência usadas pelo algoritmo (resultado da leitura):
 
 | Vértice | Lista de adjacência |
 |---------|---------------------|
