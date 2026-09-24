@@ -37,7 +37,13 @@ diâmetro(G) = max{exc(1), exc(2), exc(3), exc(4), exc(5), exc(6)} = 3
 centro(G) = {2, 5}
 
 ## Componentes conexas
-Para adequar o grafo ao formato de entrada exigido pelo algoritmo (uma lista de adjacência com vértices indexados de 0 a n−1), realizou-se a conversão da indexação original, subtraindo-se 1 de cada índice de vértice e de seus respectivos vizinhos. A estrutura de adjacências foi integralmente preservada, alterando-se apenas a numeração.
+Para adequar o grafo ao formato de entrada exigido pelo algoritmo (uma lista de adjacência com vértices indexados de 0 a n-1), realizou-se a conversão da indexação original, subtraindo-se 1 de cada índice de vértice e de seus respectivos vizinhos. A estrutura de adjacências foi integralmente preservada, alterando-se apenas a numeração.
+
+A seguir, rastreamento do algoritmo de componentes conexas aplicado ao grafo descrito pela lista de adjacência apresentada. O objetivo do algoritmo é identificar as componentes conexas de um grafo e relacionar cada vértice a sua componente.
+
+Seguindo cc.py, uma adaptação em Python de CC.java do *algs4*, o algoritmo itera sobre todos os vértices, executa uma DFS no primeiro não visitado.
+
+*marked* é o vetor que marca quais vértices já foram visitados. *id* associa cada vértice ao identificador da sua componente. *_size* marca a contagem de vértices de cada componente conexa. *count* marca a contagem de componentes conexas.
 
 ```
 0: [1]
@@ -46,6 +52,102 @@ Para adequar o grafo ao formato de entrada exigido pelo algoritmo (uma lista de 
 3: [4]
 4: [3, 5, 1]
 5: [4]
+```
+
+## s = 0
+
+### v = 0
+dfs(G, 0)
+
+```
+marked = [True, False, False, False, False, False]
+id     = [0, 0, 0, 0, 0, 0]
+_size  = [1, 0, 0, 0, 0, 0]
+count  = 0
+```
+
+w = 1
+dfs(G, 1)
+
+```
+marked = [True, True, False, False, False, False]
+id     = [0, 0, 0, 0, 0, 0]
+_size  = [2, 0, 0, 0, 0, 0]
+count  = 0
+```
+
+w = 0 (já visitado)
+w = 2
+dfs(G, 2)
+
+```
+marked = [True, True, True, False, False, False]
+id     = [0, 0, 0, 0, 0, 0]
+_size  = [3, 0, 0, 0, 0, 0]
+count  = 0
+```
+
+w = 1 (já visitado)
+Volta para dfs(G, 1)
+
+w = 4
+dfs(G, 4)
+
+```
+marked = [True, True, True, False, True, False]
+id     = [0, 0, 0, 0, 0, 0]
+_size  = [4, 0, 0, 0, 0, 0]
+count  = 0
+```
+
+w = 3
+dfs(G, 3)
+
+```
+marked = [True, True, True, True, True, False]
+id     = [0, 0, 0, 0, 0, 0]
+_size  = [5, 0, 0, 0, 0, 0]
+count  = 0
+```
+
+w = 4 (já visitado)
+Volta para dfs(G, 4)
+
+w = 5
+dfs(G, 5)
+
+```
+marked = [True, True, True, True, True, True]
+id     = [0, 0, 0, 0, 0, 0]
+_size  = [6, 0, 0, 0, 0, 0]
+count  = 0
+```
+
+w = 4 (já visitado)
+
+Volta para dfs(G, 4)
+
+w = 1 (já visitado)
+
+Volta para dfs(G, 1)
+
+Volta dfs(G, 0)
+
+``self.count += 1```
+
+## s = v = 1 (já visitado)
+## s = v = 2 (já visitado)
+## s = v = 3 (já visitado)
+## s = v = 4 (já visitado)
+## s = v = 5 (já visitado)
+
+Estado final:
+
+```
+marked = [True, True, True, True, True, True]
+id     = [0, 0, 0, 0, 0, 0]
+_size  = [6, 0, 0, 0, 0, 0]
+count  = 1
 ```
 
 ## Complexidade
