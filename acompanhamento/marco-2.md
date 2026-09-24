@@ -49,3 +49,24 @@ Para adequar o grafo ao formato de entrada exigido pelo algoritmo (uma lista de 
 ```
 
 ## Complexidade
+
+## Tempo: O(V · (V + E))
+
+Cada execução do algoritmo de componentes custa O(V + E):
+
+- O laço principal faz V iterações, cada uma com custo constante quando o vértice já foi visitado.
+- `dfs` é chamada **exatamente uma vez por vértice**, porque um vértice só entra na recursão se `comp[w] = -1` e é marcado logo na entrada.
+- Dentro de cada chamada, a lista de adjacência do vértice é percorrida **uma única vez**. Somando todas as listas, o total de posições visitadas é a soma dos graus, que é 2E (cada aresta aparece nas listas dos dois extremos).
+- Total por execução: V + 2E = O(V + E). No caso particular: 6 + 10 = 16 operações elementares.
+
+Para encontrar os lugares críticos, o algoritmo é executado uma vez no grafo original e V vezes com um vértice removido, ou seja, V + 1 execuções. Total: O(V · (V + E)). No caso particular, no máximo 7 × 16 = 112 operações elementares (na prática menos, pois o vértice removido e suas arestas são ignorados).
+
+Com matriz de adjacência, examinar os vizinhos de um vértice custaria O(V) mesmo para vértices de grau baixo, levando a O(V³) no total. Por isso usamos listas de adjacência.
+
+## Espaço: O(V + E)
+
+- Listas de adjacência: O(V + E) (V cabeças de lista e 2E entradas; aqui, 6 e 10).
+- Vetor `comp[]`: O(V), reinicializado a cada remoção, sem alocar novo espaço.
+- Pilha de recursão: O(V) no pior caso, quando o grafo é um caminho e a DFS desce por todos os vértices. No caso particular o máximo foi 4 (caminho 1 → 2 → 3 → 4 no grafo original).
+- Total: O(V + E).
+
