@@ -37,5 +37,15 @@ diâmetro(G) = max{exc(1), exc(2), exc(3), exc(4), exc(5), exc(6)} = 3
 centro(G) = {2, 5}
 
 ## Componentes conexas
+Para adequar o grafo ao formato de entrada exigido pelo algoritmo (uma lista de adjacência com vértices indexados de 0 a n−1), realizou-se a conversão da indexação original, subtraindo-se 1 de cada índice de vértice e de seus respectivos vizinhos. A estrutura de adjacências foi integralmente preservada, alterando-se apenas a numeração.
+
+```
+0: [1]
+1: [0, 2, 4]
+2: [1]
+3: [4]
+4: [3, 5, 1]
+5: [4]
+```
 
 ## Complexidade
