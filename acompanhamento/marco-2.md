@@ -133,7 +133,7 @@ Volta para dfs(G, 1)
 
 Volta dfs(G, 0)
 
-``self.count += 1```
+```self.count += 1```
 
 ## s = v = 1 (já visitado)
 ## s = v = 2 (já visitado)
@@ -180,3 +180,4 @@ Depois do pré-processamento em O(V + E), que é a execução do algoritmo de co
 - Ressalva: o vetor de componentes vale para o grafo **estático**. Se arestas fossem inseridas ou removidas, ele precisaria ser recalculado (ou substituído por outra estrutura, como union-find).
 - Total: O(V + E).
 
+*Referência: a descrição e a aplicação do algoritmo de componentes conexas apresentadas neste documento foram baseadas no material [A4_Conectividade.pdf](https://github.com/carubbi/RPG/blob/main/mat-didatico/aulas/A4_Conectividade.pdf) , do professor Ricardo Carubbi, que utiliza como referência o livro Algorithms, de Robert Sedgewick e Kevin Wayne, enquanto os demais conceitos de conectividade dos grafos foram baseados na obra de Nicoletti e Hruschka Junior (2017).*
