@@ -8,7 +8,73 @@ A rede é um grafo conexo não direcionado, em que os locais são vértices e as
 
 A resposta exigida pelo problema é a **quantidade** de vértices de articulação de cada rede.
 
-Uma propriedade relacionada é a de **bloco** (componente biconexa): um subgrafo maximal sem vértice de articulação. Os vértices de articulação são exatamente os vértices que pertencem a mais de um bloco. Uma rede sem locais críticos tem um único bloco e responde 0.
+A lista de adjacência abaixo representa o grafo `G` utilizado no marco anterior e construído com base em um dos casos de teste disponibilizados pela plataforma.
+
+```
+0: [1]
+1: [0, 2, 4]
+2: [1]
+3: [4]
+4: [3, 5, 1]
+5: [4]
+```
+
+O objetivo aqui é simular uma modificação do `cc.py`, uma adaptação em Python de CC.java do *algs4*, utilizada no marco anterior, para ignorar um dos vértices do grafo (que será chamado de vértice `r`) e verificar se o mesmo se divide em mais de uma componente conexa.
+
+`CC` recebe `G` em seu construtor e itera sobre o primeiro vértice, executando uma DFS, recebendo como parâmetro o vértice `r`.
+
+`dfs(G, 0, 4)`
+
+```
+marked = [True, False, False, False, False, False]
+id     = [0, 0, 0, 0, 0, 0]
+_size  = [1, 0, 0, 0, 0, 0]
+count  = 0
+```
+
+`dfs(G, 1, 4)`
+
+```
+marked = [True, True, False, False, False, False]
+id     = [0, 0, 0, 0, 0, 0]
+_size  = [2, 0, 0, 0, 0, 0]
+count  = 0
+```
+
+`dfs(G, 2, 4)`
+
+```
+marked = [True, True, True, False, False, False]
+id     = [0, 0, 0, 0, 0, 0]
+_size  = [3, 0, 0, 0, 0, 0]
+count  = 0
+```
+
+Como o único `w` em `G.adj[2]` é `1` (já visitado), o algoritmo retorna para `dfs(G, 1, 4)` e encontra `w = 4`, ignorando o vizinho e finalizando `dfs(G, 1, 4)`. A chamada `dfs(G, 4, 4)`, portanto, deverá ser descartada também no _loop_ principal.
+
+Finalizando `dfs(G, 1, 4)`, também é finalizada `dfs(G, 0, 4)` e o _loop_ principal avança para a chamada `dfs(G, 3, 4)` com `count = 1`.
+
+`dfs(G, 3, 4)`
+```
+marked = [True, True, True, True, False, False]
+id     = [0, 0, 0, 1, 0, 0]
+_size  = [3, 1, 0, 0, 0, 0]
+count  = 1
+```
+
+Como o único `w` em `G.adj[3]` é `4`, o algoritmo finaliza `dfs(G, 3, 4)` e, a partir do _loop_ principal, avança para a chamada `dfs(G, 5, 4)` com `count = 2`.
+
+`dfs(G, 5, 4)`
+```
+marked = [True, True, True, True, False, False]
+id     = [0, 0, 0, 1, 0, 2]
+_size  = [3, 1, 1, 0, 0, 0]
+count  = 2
+```
+
+Como o único `w` em `G.adj[5]` é `4`, o algortimo finaliza a chamada `dfs(G, 5, 4)` e termina sua execução com `count = 3`.
+
+Como a contagem de componentes ao ignorar o vértice `r = 4`, ele é conexo. O objetivo, então, é construir um algoritmo que execute o algoritmo de componentes tomando cada vértice do grafo como `r` e verificar quantos retornam `count > 1`.
 
 ## Critério de reconhecimento
 
@@ -41,3 +107,4 @@ Memória auxiliar total: `O(V)`. Memória total: `O(V + E)`, dominada pela repre
 
 Uma matriz de adjacência custaria `O(V²)` de memória e faria a DFS gastar `O(V)` por vértice, levando o tempo a `O(V²)`. A lista de adjacência continua a melhor escolha para redes esparsas.
 
+_Referência: a descrição e a aplicação do algoritmo de componentes conexas apresentadas neste documento foram baseadas no material [A4_Conectividade.pdf](https://github.com/carubbi/RPG/blob/main/mat-didatico/aulas/A4_Conectividade.pdf) , do professor Ricardo Carubbi, que utiliza como referência o livro Algorithms, de Robert Sedgewick e Kevin Wayne._
