@@ -74,7 +74,7 @@ count  = 2
 
 Como o único `w` em `G.adj[5]` é `4`, o algortimo finaliza a chamada `dfs(G, 5, 4)` e termina sua execução com `count = 3`.
 
-Como a contagem de componentes ao ignorar o vértice `r = 4`, ele é conexo. O objetivo, então, é construir um algoritmo que execute o algoritmo de componentes tomando cada vértice do grafo como `r` e verificar quantos retornam `count > 1`.
+Como a contagem de componentes ao ignorar o vértice `r = 4` é maior que 1, ele é um vértice de articulação. O objetivo, então, é construir um algoritmo que execute o algoritmo de componentes tomando cada vértice do grafo como `r` e verificar quantos retornam `count > 1`.
 
 ## Critério de reconhecimento
 
