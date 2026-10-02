@@ -19,6 +19,11 @@ A lista de adjacência abaixo representa o grafo `G` utilizado no marco anterior
 5: [4]
 ```
 
+| Implementação | Papel | Adaptação prevista |
+|---|---|---|
+| `graph.py` | Representação do grafo com listas de adjacência | Lista de `Bag()` para "lista de listas" |
+| `CC.py` | DFS para componentes conexas | Adaptar para ignorar um vértice `r` |
+
 O objetivo aqui é simular uma modificação do `cc.py`, uma adaptação em Python de CC.java do *algs4*, utilizada no marco anterior, para ignorar um dos vértices do grafo (que será chamado de vértice `r`) e verificar se o mesmo se divide em mais de uma componente conexa.
 
 `CC` recebe `G` em seu construtor e itera sobre o primeiro vértice, executando uma DFS, recebendo como parâmetro o vértice `r`.
