@@ -96,15 +96,18 @@ Sejam `V` o número de locais e `E` o número de linhas de uma rede.
 
 Distinguindo a representação do grafo da memória auxiliar:
 
-| Componente | Custo | Na instância principal |
+| Componente | Custo | Neste grafo |
 |---|---|---|
 | **Representação do grafo** (lista de adjacência): `V` cabeças de lista e `2E` entradas | `O(V + E)` | 6 listas, 10 entradas |
-| **Memória auxiliar**: `marked`, `pre`, `low`, `art` (um valor por vértice) | `O(V)` | 4 vetores de 6 posições |
-| **Memória auxiliar**: pilha de recursão da DFS | `O(V)` no pior caso (grafo em caminho) | profundidade máxima 4 (`0 → 1 → 4 → 3`) |
-| **Memória auxiliar**: contador de tempo, contador de filhos e resposta | `O(1)` | 3 inteiros |
+| **Memória auxiliar**: `marked`, `id` e `_size` (um valor por vértice) | `O(V)` | 3 vetores de 6 posições |
+| **Memória auxiliar**: pilha de recursão da DFS | `O(V)` no pior caso (grafo em caminho) | profundidade máxima 4 (por exemplo, `0 → 1 → 4 → 3` com `r = 2`) |
+| **Memória auxiliar**: `count`, `r` e o contador de vértices críticos | `O(1)` | 3 inteiros |
 
-Memória auxiliar total: `O(V)`. Memória total: `O(V + E)`, dominada pela representação do grafo. A versão direta usa a mesma memória auxiliar, pois reaproveita o vetor de visitados a cada remoção. A vantagem da versão com *low-link* é apenas de tempo.
+O grafo `G − r` não é construído: o vértice `r` é apenas ignorado pelo laço principal e pela DFS. Por isso, a representação continua sendo uma única lista de adjacência, sem cópia do grafo a cada remoção.
 
-Uma matriz de adjacência custaria `O(V²)` de memória e faria a DFS gastar `O(V)` por vértice, levando o tempo a `O(V²)`. A lista de adjacência continua a melhor escolha para redes esparsas.
+Os vetores `marked`, `id` e `_size` são reinicializados a cada novo valor de `r`, então a memória auxiliar não se acumula entre as `V` execuções do `CC`: em qualquer instante existe apenas um conjunto desses vetores.
 
+Memória auxiliar total: `O(V)`. Memória total: `O(V + E)`, dominada pela representação do grafo. A repetição do `CC` para cada `r` aumenta o tempo (de `O(V + E)` para `O(V · (V + E))`), mas não a memória.
+
+Uma matriz de adjacência custaria `O(V²)` de memória. Como a rede é esparsa, a lista de adjacência continua a melhor escolha.
 _Referência: a descrição e a aplicação do algoritmo de componentes conexas apresentadas neste documento foram baseadas no material [A4_Conectividade.pdf](https://github.com/carubbi/RPG/blob/main/mat-didatico/aulas/A4_Conectividade.pdf) , do professor Ricardo Carubbi, que utiliza como referência o livro Algorithms, de Robert Sedgewick e Kevin Wayne._
