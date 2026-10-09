@@ -1,7 +1,7 @@
 # Marco 4
 
 ## Solução
-_A solução foi implementada em Python e pode ser acessada pela pasta `/src` na raíz do repositório.
+A solução foi implementada em Python e pode ser acessada pela pasta `/src` na raíz do repositório.
 
 ## Estrutura
 
@@ -15,7 +15,7 @@ src/
 ## Execução
 
 ```bash
-python ./src/main.py < ./dados/casos-de-teste.tx
+python ./src/main.py < ./dados/casos-de-teste.txt
 ```
 
 ## Adaptações do _algs4_
