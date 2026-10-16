@@ -16,3 +16,6 @@ A solução é baseada no algoritmo de componentes conexas do _algs4_, onde o ob
 
 # Referências
 A solução foi desenvolvida a partir das adaptações em Python do código do livro *Algorithms* (SEDGEWICK; WAYNE, 4. ed.), disponibilizadas pelo Prof. Ricardo Carubbi no repositório [RPG/algs4-py](https://github.com/carubbi/RPG/tree/main/algs4-py).
+
+# Nota de evidências
+Devido à indisponibilidade de registro no site [Online Judge](https://onlinejudge.org/), não foi possível enviar a solução para avaliação. O documento que descreve o problema cita um limite de tamanho de entrada e de tempo de 3 segundos. Em `/dados/casos-de-teste.txt`, é possível encontrar como último caso de teste um grafo que respeita esse limite de entrada, e executar o algoritmo em `/src/main.py` para avaliar o tempo de execução.
